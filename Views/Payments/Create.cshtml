@@ -1,0 +1,63 @@
+﻿@model RentalCarApp.Models.Payment
+
+@{
+    ViewData["Title"] = "Create Payment";
+}
+
+<h1>Create Payment</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ReservationID" class="control-label"></label>
+                <select asp-for="ReservationID" class="form-control" asp-items="ViewBag.ReservationID" id="reservationSelect"></select>
+                <span asp-validation-for="ReservationID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" id="amount" readonly />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PaymentDate" class="control-label"></label>
+                <input asp-for="PaymentDate" class="form-control" type="date" />
+                <span asp-validation-for="PaymentDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#reservationSelect').change(function () {
+                const reservationId = $(this).val();
+                if (reservationId) {
+                    $.get(`/Payments/GetTotalCost?reservationId=${reservationId}`, function (data) {
+                        $('#amount').val(data);
+                    }).fail(function () {
+                        alert("Nie udało się pobrać kosztu całkowitego dla wybranej rezerwacji.");
+                    });
+                } else {
+                    $('#amount').val("");
+                }
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wypożyczalnia Samochodów</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #2d3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .intro {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .intro h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .intro p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .form-section {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        .form-section form {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .form-section input, .form-section select, .form-section button {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-section button {
+            background-color: #2d3e50;
+            color: white;
+            cursor: pointer;
+        }
+        .form-section button:hover {
+            background-color: #4b5a68;
+        }
+        .cars-section {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .car-card {
+            width: 30%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .car-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .car-card h3 {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .footer {
+            background-color: #2d3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Wypożyczalnia Samochodów</h1>
+        <p>Znajdź idealny samochód na każdą okazję!</p>
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <h2>Wypożycz samochód już teraz!</h2>
+            <p>Wybierz pojazd, wypełnij formularz rejestracyjny i ciesz się nowym samochodem!</p>
+        </section>
+
+
+        <section class="cars-section">
+            <div class="car-card">
+                <img src="~/images/car1.jpg" alt="Opel Corsa">
+                <h3>Opel Corsa</h3>
+                <p>Kompaktowy, oszczędny i komfortowy.</p>
+            </div>
+            <div class="car-card">
+                <img src="~/images/car2.jpg" alt="Ford Mustang">
+                <h3>Ford Mustang</h3>
+                <p>Sportowy i szybki.</p>
+            </div>
+            <div class="car-card">
+                <img src="~/images/car3.jpg" alt="BMW seri 7">
+                <h3>BMW 7</h3>
+                <p>Luksusowy, z nowoczesnymi technologiami.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Wypożyczalnia Samochodów | Wszystkie prawa zastrzeżone</p>
+    </footer>
+
+</body>
+</html>
+

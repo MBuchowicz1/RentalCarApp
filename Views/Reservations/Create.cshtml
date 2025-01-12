@@ -1,0 +1,101 @@
+﻿@model RentalCarApp.Models.Reservation
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Reservation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ClientID" class="control-label"></label>
+                <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+                <span asp-validation-for="ClientID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="VehicleID" class="control-label"></label>
+                <select asp-for="VehicleID" class="form-control" asp-items="ViewBag.VehicleID" id="vehicleSelect"></select>
+                <span asp-validation-for="VehicleID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" id="startDate" type="date" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" id="endDate" type="date" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TotalCost" class="control-label"></label>
+                <input asp-for="TotalCost" class="form-control" id="totalCost" readonly />
+                <span asp-validation-for="TotalCost" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let dailyPrice = 0;
+
+            $('#vehicleSelect').change(function () {
+                const vehicleId = $(this).val();
+                if (vehicleId) {
+                    $.get(`/Vehicles/GetDailyPrice/${vehicleId}`, function (data) {
+                        dailyPrice = parseFloat(data);
+                        if (isNaN(dailyPrice) || dailyPrice <= 0) {
+                            alert("Nie udało się pobrać ceny dziennej.");
+                            dailyPrice = 0;
+                        }
+                        calculateTotalCost();
+                    });
+                }
+            });
+
+            $('#startDate, #endDate').change(function () {
+                calculateTotalCost();
+            });
+
+            function calculateTotalCost() {
+                const startDate = new Date($('#startDate').val());
+                const endDate = new Date($('#endDate').val());
+                if (startDate && endDate && dailyPrice > 0) {
+                    if (startDate > endDate) {
+                        alert("Data zakończenia musi być późniejsza niż data rozpoczęcia.");
+                        $('#totalCost').val("0.00");
+                        return;
+                    }
+                    const timeDiff = endDate - startDate;
+                    const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                    if (days > 0) {
+                        $('#totalCost').val((days * dailyPrice).toFixed(2));
+                    } else {
+                        $('#totalCost').val("0.00");
+                    }
+                }
+            }
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
